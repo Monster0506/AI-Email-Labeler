@@ -84,14 +84,15 @@ export default function Dashboard() {
   const [loadingEmails, setLoadingEmails] = useState(false);
   const [emailsError, setEmailsError] = useState<string | null>(null);
   const [promptSaved, setPromptSaved] = useState(false);
+  const [maxResults, setMaxResults] = useState(10);
   const router = useRouter();
 
-  // Fetch emails from API when authenticated
+  // Fetch emails from API when authenticated or maxResults changes
   useEffect(() => {
     if (accessToken) {
       setLoadingEmails(true);
       setEmailsError(null);
-      fetch(`/api/emails?access_token=${accessToken}`)
+      fetch(`/api/emails?access_token=${accessToken}&maxResults=${maxResults}`)
         .then(res => res.json())
         .then(data => {
           if (data.emails) {
@@ -103,7 +104,7 @@ export default function Dashboard() {
         .catch(err => setEmailsError(err.message))
         .finally(() => setLoadingEmails(false));
     }
-  }, [accessToken]);
+  }, [accessToken, maxResults]);
 
   useEffect(() => {
     if (selectAllRef.current) {
@@ -464,6 +465,31 @@ export default function Dashboard() {
 
               {/* Controls */}
               <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3 relative group">
+                  <div className="relative">
+                    <label className="text-xs font-semibold text-gray-700 dark:text-gray-200 mr-2 flex items-center gap-1 cursor-pointer select-none">
+                      <svg className="w-4 h-4 text-blue-600 inline-block" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                      <span>Show</span>
+                    </label>
+                    <div className="inline-block relative">
+                      <select
+                        value={maxResults}
+                        onChange={e => setMaxResults(Number(e.target.value))}
+                        className="appearance-none px-3 py-1 border border-blue-300 dark:border-blue-700 rounded text-sm bg-white dark:bg-gray-900 text-blue-700 dark:text-blue-200 font-bold shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-500 transition-all duration-200 cursor-pointer hover:border-blue-500"
+                        style={{ minWidth: 70 }}
+                        aria-label="How many emails to fetch from Gmail"
+                      >
+                        {[5, 10, 20, 50, 100].map(n => (
+                          <option key={n} value={n}>{n}</option>
+                        ))}
+                      </select>
+                      <svg className="w-4 h-4 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-blue-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                    </div>
+                    <div className="absolute left-0 mt-1 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity duration-200 z-10 bg-gray-900 text-white text-xs rounded px-3 py-2 shadow-lg whitespace-nowrap" style={{top: '2.2rem'}}>
+                      How many emails to fetch from Gmail
+                    </div>
+                  </div>
+                </div>
                 <label className="flex items-center text-sm cursor-pointer text-gray-700 dark:text-gray-200">
                   <input
                     type="checkbox"
@@ -480,7 +506,6 @@ export default function Dashboard() {
                   />
                   Select All
                 </label>
-                
                 <div className="flex items-center space-x-2">
                   <select
                     value={sortBy}
@@ -491,21 +516,18 @@ export default function Dashboard() {
                     <option value="priority">Sort by Priority</option>
                     <option value="archived">Sort by Archived</option>
                   </select>
-                  
                   <button
                     onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
                     className="px-3 py-1 border border-gray-300 dark:border-gray-700 rounded text-sm bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-900 dark:text-gray-100"
                   >
                     {sortOrder === 'asc' ? '↑' : '↓'}
                   </button>
-                  
                   <button
                     onClick={handleAutoApply}
                     className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm font-medium transition-colors"
                   >
                     Auto Apply All
                   </button>
-                  
                   <button
                     onClick={handleSaveToGmail}
                     disabled={Object.keys(appliedActions).length === 0}

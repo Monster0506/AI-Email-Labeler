@@ -148,7 +148,7 @@ export async function POST(request: Request, { params }: { params: { [key: strin
     };
     const model = genAI.getGenerativeModel({
       systemInstruction: `You are a helpful assistant that helps users manage their emails. For label colors, only use the following palette: ${paletteDesc}`,
-      model: "gemini-2.0-flash-lite",
+      model: "gemini-2.5-flash-lite-preview-06-17",
       generationConfig: {
         responseMimeType: "application/json",
         responseSchema: schema,

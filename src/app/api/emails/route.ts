@@ -11,11 +11,14 @@ export async function GET(request: Request, { params }: { params: { [key: string
   userOAuth2.setCredentials({ access_token: accessToken });
   const gmail = google.gmail({ version: 'v1', auth: userOAuth2 });
 
+  const maxResultsParam = searchParams.get('maxResults');
+  const maxResults = maxResultsParam ? parseInt(maxResultsParam, 10) : 10;
+
   try {
     // List messages
     const listRes = await gmail.users.messages.list({
       userId: 'me',
-      maxResults: 10,
+      maxResults,
     });
     const messages = listRes.data.messages || [];
     // Fetch details for each message
