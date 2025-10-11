@@ -9,7 +9,8 @@
 
 **The next-generation email assistant powered by AI. Organize, label, and reply to your emails with a single click.**
 
-[Live Demo](https://ai-email-assistant.vercel.app) • [Privacy Policy](./src/app/privacy-policy/page.tsx)
+[Live Demo](https://ai-email-taupe.vercel.app/) • [Privacy Policy](./src/app/privacy-policy/page.tsx)
+Inspired by https://koomen.dev/essays/horseless-carriages/
 
 </div>
 
@@ -211,12 +212,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Vercel** for seamless deployment
 - **Tailwind CSS** for beautiful styling
 
-## 📞 Support
-
-- **Documentation**: [Wiki](https://github.com/yourusername/ai-email/wiki)
-- **Issues**: [GitHub Issues](https://github.com/yourusername/ai-email/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/ai-email/discussions)
-- **Email**: support@ai-email.com
 
 ---
 
