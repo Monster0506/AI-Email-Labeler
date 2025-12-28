@@ -212,15 +212,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Vercel** for seamless deployment
 - **Tailwind CSS** for beautiful styling
 
-
----
-
-<div align="center">
-
-**Made with ❤️ by the AI Email Team**
-
-[![GitHub stars](https://img.shields.io/github/stars/yourusername/ai-email?style=social)](https://github.com/yourusername/ai-email)
-[![GitHub forks](https://img.shields.io/github/forks/yourusername/ai-email?style=social)](https://github.com/yourusername/ai-email)
-[![GitHub issues](https://img.shields.io/github/issues/yourusername/ai-email)](https://github.com/yourusername/ai-email/issues)
-
-</div>
